@@ -8,22 +8,21 @@ console.log(tableData);
 
 var tbody = d3.select("tbody");
 
-tableData.forEach(sighting => {
-    var row = tbody.append("tr");
-    Object.entries(sighting).forEach(([key, value]) => {
-        var cell = row.append("td");
-        cell.text(value);
+function init() {
+    tableData.forEach(sighting => {
+        var row = tbody.append("tr");
+        Object.entries(sighting).forEach(([key, value]) => {
+            var cell = row.append("td");
+            cell.text(value);
+        });
     });
-});
+};
 
 var button = d3.select("#filter-btn");
 var form = d3.select("#form");
 
 function runEnter(event) {
-    d3.event.preventDefault();
-
-    var tbody = d3.select("tbody");
-    tbody.remove();
+    d3.event.preventDefault();    
 
     var inputText = d3.select("#datetime");
 
@@ -31,14 +30,16 @@ function runEnter(event) {
     var defaultDate = inputText.property("placeholder");
 
     console.log(inputDate);
-    //console.log(defaultDate);
+    console.log(defaultDate);
 
     var filteredData = tableData.filter(sighting => sighting.datetime === inputDate);
-    //var filteredData = tableData.filter(sighting => sighting.datetime < defaultDate);
+    
     console.log(filteredData);
 
+    tbody.html("");
+
     filteredData.forEach(sighting => {
-        var row = tbody.remove("tr");
+        var row = tbody.append("tr");
         Object.entries(sighting).forEach(([key, value]) => {
             var cell = row.append("td");
             cell.text(value);
@@ -48,5 +49,6 @@ function runEnter(event) {
 
 button.on("click", runEnter);
 form.on("submit", runEnter);
+form.on("reset", init);
 
-
+init();
