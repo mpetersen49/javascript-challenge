@@ -6,25 +6,24 @@ console.log(tableData);
 
 // YOUR CODE HERE!
 
+var tbody = d3.select("tbody");
 
-function init() {
-    var tbody = d3.select("tbody");
-    tableData.forEach(sighting => {
-        var row = tbody.append("tr");
-        Object.entries(sighting).forEach(([key, value]) => {
-            var cell = row.append("td");
-            cell.text(value);
-        });
+tableData.forEach(sighting => {
+    var row = tbody.append("tr");
+    Object.entries(sighting).forEach(([key, value]) => {
+        var cell = row.append("td");
+        cell.text(value);
     });
-};
+});
 
 var button = d3.select("#filter-btn");
-var form = d3.select("form");
+var form = d3.select("#form");
 
 function runEnter(event) {
     d3.event.preventDefault();
 
     var tbody = d3.select("tbody");
+    tbody.remove();
 
     var inputText = d3.select("#datetime");
 
@@ -39,7 +38,7 @@ function runEnter(event) {
     console.log(filteredData);
 
     filteredData.forEach(sighting => {
-        var row = tbody.append("tr");
+        var row = tbody.remove("tr");
         Object.entries(sighting).forEach(([key, value]) => {
             var cell = row.append("td");
             cell.text(value);
@@ -50,5 +49,4 @@ function runEnter(event) {
 button.on("click", runEnter);
 form.on("submit", runEnter);
 
-init();
 
