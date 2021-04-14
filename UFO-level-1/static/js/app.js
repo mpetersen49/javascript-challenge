@@ -28,11 +28,13 @@ function runEnter(event) {
 
     var inputDate = inputText.property("value");
     var defaultDate = inputText.property("placeholder");
-
-    console.log(inputDate);
-    console.log(defaultDate);
-
-    var filteredData = tableData.filter(sighting => sighting.datetime === inputDate);
+    
+    if (inputDate === "") {
+        var filteredData = tableData.filter(sighting => sighting.datetime != defaultDate);
+    }
+    else {
+        var filteredData = tableData.filter(sighting => sighting.datetime === inputDate);
+    }    
     
     console.log(filteredData);
 
@@ -49,6 +51,5 @@ function runEnter(event) {
 
 button.on("click", runEnter);
 form.on("submit", runEnter);
-form.on("reset", init);
 
 init();
